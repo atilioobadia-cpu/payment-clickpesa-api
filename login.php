@@ -45,41 +45,42 @@ $authLayout = true;
 
 require_once __DIR__ . '/includes/header.php';
 ?>
-<section class="auth-card">
-    <div class="panel-header">
-        <div>
-            <p class="eyebrow">Sandbox Access</p>
-            <h2>Login</h2>
+<div class="auth-page">
+    <div class="auth-brand-block">
+        <span class="brand-mark">F</span>
+        <div class="auth-brand-copy">
+            <h1 class="auth-title">Login to Sandbox</h1>
         </div>
-        <p class="panel-note">Use the seeded demo account or your own registered account.</p>
     </div>
 
-    <form method="post" action="<?= e(route_path('login.php')) ?>" class="stack-lg" data-loading-form>
-        <?= csrf_input() ?>
-        <label class="field">
-            <span>Email address</span>
-            <input type="email" name="email" value="<?= e($oldInput['email'] ?? '') ?>" required autocomplete="email">
-        </label>
+    <section class="auth-card auth-card-compact">
+        <form method="post" action="<?= e(route_path('login.php')) ?>" class="auth-form auth-form-compact" data-loading-form>
+            <?= csrf_input() ?>
+            <label class="auth-field">
+                <span>Email address</span>
+                <div class="auth-input-group">
+                    <?= app_icon('mail', 'auth-input-icon') ?>
+                    <input type="email" name="email" value="<?= e($oldInput['email'] ?? '') ?>" required autocomplete="email">
+                </div>
+            </label>
 
-        <label class="field">
-            <span>Password</span>
-            <input type="password" name="password" required autocomplete="current-password">
-        </label>
+            <label class="auth-field">
+                <span>Password</span>
+                <div class="auth-input-group">
+                    <?= app_icon('lock', 'auth-input-icon') ?>
+                    <input id="login-password" type="password" name="password" required autocomplete="current-password">
+                    <button type="button" class="auth-input-action" data-password-toggle data-password-target="login-password">Show</button>
+                </div>
+            </label>
 
-        <button type="submit" class="button button-primary button-block" data-loading-text="Signing in...">
-            Sign in
-        </button>
-    </form>
+            <button type="submit" class="button button-primary button-block" data-loading-text="Signing in...">
+                <span>Login</span>
+            </button>
+        </form>
 
-    <div class="info-card">
-        <strong>Demo login</strong>
-        <p>Email: <code>admin@paymentsandbox.test</code></p>
-        <p>Password: <code>Password123!</code></p>
-    </div>
+        <div class="auth-divider"><span>or</span></div>
 
-    <div class="auth-footer">
-        <p>No account yet?</p>
-        <a class="button button-secondary button-block" href="<?= e(route_path('register.php')) ?>">Create account</a>
-    </div>
-</section>
+        <a class="button button-secondary button-block auth-secondary-button" href="<?= e(route_path('register.php')) ?>">Create account</a>
+    </section>
+</div>
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

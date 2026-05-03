@@ -82,13 +82,13 @@ $pageSubtitle = 'Trigger sandbox callback outcomes for any payment currently in 
 $pageBreadcrumbs = ['Payment Sandbox', 'Gateway Simulator'];
 $pageActions = [
     ['label' => 'Refresh', 'href' => route_path('simulator.php'), 'variant' => 'button-secondary', 'icon' => 'refresh'],
-    ['label' => 'New Payment', 'href' => route_path('payment_form.php'), 'variant' => 'button-dark', 'icon' => 'plus'],
+    ['label' => 'New Payment', 'href' => route_path('payment_form.php'), 'variant' => 'button-primary', 'icon' => 'plus'],
 ];
 $activePage = 'simulator';
 
 require_once __DIR__ . '/includes/header.php';
 ?>
-<section class="panel">
+<section class="panel list-panel">
     <div class="panel-header">
         <div>
             <p class="eyebrow">Simulator Queue</p>
@@ -104,7 +104,7 @@ require_once __DIR__ . '/includes/header.php';
             <a class="button button-primary" href="<?= e(route_path('payment_form.php')) ?>">Create payment</a>
         </div>
     <?php else: ?>
-        <div class="table-wrap">
+        <div class="table-wrap list-table-wrap">
             <table class="data-table">
                 <thead>
                     <tr>
@@ -146,7 +146,7 @@ require_once __DIR__ . '/includes/header.php';
     <?php endif; ?>
 </section>
 
-<section class="panel">
+<section class="panel list-panel">
     <div class="panel-header">
         <div>
             <p class="eyebrow">Latest Callback Results</p>
@@ -159,7 +159,7 @@ require_once __DIR__ . '/includes/header.php';
             <p>No finalized payments yet.</p>
         </div>
     <?php else: ?>
-        <div class="table-wrap">
+        <div class="table-wrap list-table-wrap">
             <table class="data-table">
                 <thead>
                     <tr>

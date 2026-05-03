@@ -2,12 +2,27 @@
 declare(strict_types=1);
 
 $activePage = $activePage ?? '';
-$menuItems = [
-    'dashboard' => ['label' => 'Workspace', 'href' => route_path('dashboard.php'), 'icon' => 'dashboard'],
-    'payment_form' => ['label' => 'New Payment', 'href' => route_path('payment_form.php'), 'icon' => 'payment'],
-    'payments' => ['label' => 'All Payments', 'href' => route_path('payments.php'), 'icon' => 'list'],
-    'simulator' => ['label' => 'Gateway Simulator', 'href' => route_path('simulator.php'), 'icon' => 'simulator'],
-    'settings' => ['label' => 'Settings', 'href' => route_path('settings.php'), 'icon' => 'settings'],
+$menuGroups = [
+    [
+        'label' => 'Dashboard',
+        'items' => [
+            ['key' => 'dashboard', 'label' => 'Dashboard', 'href' => route_path('dashboard.php'), 'icon' => 'dashboard'],
+        ],
+    ],
+    [
+        'label' => 'Payments',
+        'items' => [
+            ['key' => 'payment_form', 'label' => 'New Payment', 'href' => route_path('payment_form.php'), 'icon' => 'payment'],
+            ['key' => 'payments', 'label' => 'Transactions', 'href' => route_path('payments.php'), 'icon' => 'transactions'],
+        ],
+    ],
+    [
+        'label' => 'Testing',
+        'items' => [
+            ['key' => 'simulator', 'label' => 'Simulator', 'href' => route_path('simulator.php'), 'icon' => 'simulator'],
+            ['key' => 'settings', 'label' => 'Settings', 'href' => route_path('settings.php'), 'icon' => 'settings'],
+        ],
+    ],
 ];
 ?>
 <aside class="sidebar no-print" id="app-sidebar">
@@ -24,15 +39,22 @@ $menuItems = [
     </div>
 
     <nav class="sidebar-nav sidebar-section">
-        <p class="sidebar-caption">Modules</p>
-        <?php foreach ($menuItems as $key => $item): ?>
-            <a class="sidebar-link <?= $activePage === $key ? 'is-active' : '' ?>" href="<?= e($item['href']) ?>" data-sidebar-link>
-                <?= app_icon((string) $item['icon'], 'sidebar-link-icon') ?>
-                <span><?= e($item['label']) ?></span>
-                <?php if ($activePage === $key): ?>
-                    <span class="sidebar-link-indicator"></span>
-                <?php endif; ?>
-            </a>
+        <?php foreach ($menuGroups as $group): ?>
+            <div class="sidebar-group">
+                <p class="sidebar-caption"><?= e($group['label']) ?></p>
+                <div class="sidebar-group-links">
+                    <?php foreach ($group['items'] as $item): ?>
+                        <?php $isActive = $activePage === $item['key']; ?>
+                        <a class="sidebar-link <?= $isActive ? 'is-active' : '' ?>" href="<?= e($item['href']) ?>" data-sidebar-link>
+                            <?= app_icon((string) $item['icon'], 'sidebar-link-icon') ?>
+                            <span><?= e($item['label']) ?></span>
+                            <?php if ($isActive): ?>
+                                <span class="sidebar-link-indicator"></span>
+                            <?php endif; ?>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
         <?php endforeach; ?>
     </nav>
 
@@ -47,9 +69,10 @@ $menuItems = [
             </div>
         <?php endif; ?>
         <div class="sidebar-utility-card">
-            <span>Raven</span>
+            <span>Reports live inside Transactions</span>
             <?= app_icon('external', 'icon') ?>
         </div>
+        <p class="sidebar-caption">Auth</p>
         <a class="sidebar-link sidebar-link-utility" href="<?= e(route_path('logout.php')) ?>" data-sidebar-link>
             <?= app_icon('logout', 'sidebar-link-icon') ?>
             <span>Sign out</span>

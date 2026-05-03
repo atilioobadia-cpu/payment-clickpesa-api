@@ -46,13 +46,13 @@ $statement->execute($parameters);
 $payments = $statement->fetchAll();
 
 $pageTitle = 'All Payments';
-$pageHeading = 'All Payments';
+$pageHeading = 'Transactions';
 $pageSubtitle = 'Search, filter, and monitor ClickPesa and simulator payment records in one list view.';
-$pageBreadcrumbs = ['Payment Sandbox', 'All Payments'];
+$pageBreadcrumbs = ['Payment Sandbox', 'Transactions'];
 $pageActions = [
     ['label' => 'List View', 'href' => route_path('payments.php'), 'variant' => 'button-secondary', 'icon' => 'list'],
     ['label' => 'Refresh', 'href' => route_path('payments.php?' . http_build_query($_GET)), 'variant' => 'button-secondary', 'icon' => 'refresh'],
-    ['label' => 'New Payment', 'href' => route_path('payment_form.php'), 'variant' => 'button-dark', 'icon' => 'plus'],
+    ['label' => 'New Payment', 'href' => route_path('payment_form.php'), 'variant' => 'button-primary', 'icon' => 'plus'],
 ];
 $activePage = 'payments';
 
@@ -109,9 +109,10 @@ require_once __DIR__ . '/includes/header.php';
             <div class="list-toolbar-group">
                 <button type="button" class="toolbar-chip is-active"><?= app_icon('list', 'chip-icon') ?>List View</button>
                 <button type="button" class="toolbar-chip" data-filter-toggle aria-controls="payments-filters"><?= app_icon('filter', 'chip-icon') ?>Filter</button>
+                <button type="button" class="toolbar-chip"><?= app_icon('refresh', 'chip-icon') ?>Last Updated</button>
             </div>
             <div class="list-toolbar-group">
-                <span class="list-toolbar-meta"><?= e((string) count($payments)) ?> of <?= e((string) count($payments)) ?></span>
+                <span class="list-toolbar-meta"><?= e((string) count($payments)) ?> records</span>
             </div>
         </div>
 

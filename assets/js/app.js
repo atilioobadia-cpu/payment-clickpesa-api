@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
     const themeKey = 'paymentSandboxTheme';
+    const sidebarKey = 'paymentSandboxSidebar';
     const desktopSidebarBreakpoint = 1024;
     const moonIcon = '<span class="icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 12.8A6.5 6.5 0 017.2 5.5 6.7 6.7 0 1014.5 12.8z"/></svg></span>';
     const sunIcon = '<span class="icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="3.2"/><path d="M10 2.8v2"/><path d="M10 15.2v2"/><path d="M17.2 10h-2"/><path d="M4.8 10h-2"/><path d="M15.1 4.9l-1.4 1.4"/><path d="M6.3 13.7l-1.4 1.4"/><path d="M15.1 15.1l-1.4-1.4"/><path d="M6.3 6.3L4.9 4.9"/></svg></span>';
@@ -51,6 +52,14 @@ document.addEventListener('DOMContentLoaded', () => {
         applyTheme('light');
     }
 
+    try {
+        if (window.innerWidth > desktopSidebarBreakpoint && localStorage.getItem(sidebarKey) === 'collapsed') {
+            body.classList.add('sidebar-condensed');
+        }
+    } catch (error) {
+        console.warn(error);
+    }
+
     document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
         button.addEventListener('click', () => {
             const nextTheme = body.classList.contains('theme-dark') ? 'light' : 'dark';
@@ -71,6 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             body.classList.toggle('sidebar-condensed');
+            try {
+                localStorage.setItem(sidebarKey, body.classList.contains('sidebar-condensed') ? 'collapsed' : 'expanded');
+            } catch (error) {
+                console.warn(error);
+            }
         });
     });
 
@@ -141,6 +155,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    document.querySelectorAll('[data-password-toggle]').forEach((button) => {
+        button.addEventListener('click', () => {
+            const targetId = button.getAttribute('data-password-target');
+            const input = targetId ? document.getElementById(targetId) : null;
+
+            if (!(input instanceof HTMLInputElement)) {
+                return;
+            }
+
+            const isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+            button.textContent = isPassword ? 'Hide' : 'Show';
+        });
+    });
+
     document.querySelectorAll('[data-print-page]').forEach((button) => {
         button.addEventListener('click', () => {
             window.print();
@@ -160,6 +189,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.innerWidth > desktopSidebarBreakpoint) {
             body.classList.remove('sidebar-open');
             body.classList.remove('filters-open');
+            return;
         }
+
+        body.classList.remove('sidebar-condensed');
     });
 });

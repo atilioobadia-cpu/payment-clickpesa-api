@@ -24,6 +24,8 @@ foreach ($bodyAttributes as $attribute => $value) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= e($pageTitle) ?> | <?= e(app_config('app.name')) ?></title>
+    <link rel="preconnect" href="https://rsms.me">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <script>
         (function () {
             try {
@@ -40,19 +42,9 @@ foreach ($bodyAttributes as $attribute => $value) {
 <body class="<?= e($bodyClass) ?>"<?= $bodyAttributeMarkup ?>>
 <?php if ($authLayout): ?>
     <div class="auth-shell">
-        <header class="auth-topbar global-topbar no-print">
-            <div class="global-topbar-left">
-                <a class="global-brand brand-inline" href="<?= e(route_path('index.php')) ?>">
-                    <span class="brand-mark">F</span>
-                    <span><?= e(app_config('app.name')) ?></span>
-                </a>
-            </div>
-            <div class="global-topbar-right">
-                <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
-                    <?= app_icon('moon', 'icon') ?>
-                </button>
-            </div>
-        </header>
+        <button class="icon-button theme-toggle auth-theme-toggle no-print" type="button" data-theme-toggle aria-label="Toggle theme">
+            <?= app_icon('moon', 'icon') ?>
+        </button>
 
         <?php if ($flashes !== []): ?>
             <div class="toast-stack no-print" data-toast-stack>
@@ -76,13 +68,15 @@ foreach ($bodyAttributes as $attribute => $value) {
                         <span class="brand-mark">F</span>
                     </a>
                     <nav class="global-breadcrumbs desktop-only" aria-label="Global breadcrumb">
-                        <span>Payment Sandbox Demo</span>
+                        <span class="global-breadcrumb-item">Payment Sandbox Demo</span>
+                        <?= app_icon('chevron-right', 'global-breadcrumb-separator') ?>
+                        <span class="global-breadcrumb-item">Desk</span>
                     </nav>
                 </div>
                 <button class="global-search" type="button" aria-label="Search commands">
                     <?= app_icon('search', 'icon') ?>
                     <span>Search or type a command</span>
-                    <kbd>Ctrl K</kbd>
+                    <kbd>Ctrl + G</kbd>
                 </button>
                 <div class="global-topbar-right">
                     <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
@@ -91,7 +85,8 @@ foreach ($bodyAttributes as $attribute => $value) {
                     <button class="icon-button desktop-only" type="button" aria-label="Notifications">
                         <?= app_icon('bell', 'icon') ?>
                     </button>
-                    <button class="topbar-link desktop-only" type="button" aria-label="Help">
+                    <button class="topbar-link desktop-only" type="button" aria-label="Help menu">
+                        <?= app_icon('help', 'topbar-link-icon') ?>
                         <span>Help</span>
                         <?= app_icon('chevron-down', 'topbar-link-icon') ?>
                     </button>

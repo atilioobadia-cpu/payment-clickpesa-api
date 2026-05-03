@@ -85,45 +85,59 @@ $authLayout = true;
 
 require_once __DIR__ . '/includes/header.php';
 ?>
-<section class="auth-card">
-    <div class="panel-header">
-        <div>
-            <p class="eyebrow">New Workspace</p>
-            <h2>Register</h2>
+<div class="auth-page">
+    <div class="auth-brand-block">
+        <span class="brand-mark">F</span>
+        <div class="auth-brand-copy">
+            <h1 class="auth-title">Create account</h1>
         </div>
-        <p class="panel-note">New accounts are created as tester users so you can access the simulator immediately.</p>
     </div>
 
-    <form method="post" action="<?= e(route_path('register.php')) ?>" class="stack-lg" data-loading-form>
-        <?= csrf_input() ?>
-        <label class="field">
-            <span>Full name</span>
-            <input type="text" name="name" value="<?= e($oldInput['name'] ?? '') ?>" required autocomplete="name">
-        </label>
+    <section class="auth-card auth-card-compact">
+        <form method="post" action="<?= e(route_path('register.php')) ?>" class="auth-form auth-form-compact" data-loading-form>
+            <?= csrf_input() ?>
+            <label class="auth-field">
+                <span>Full name</span>
+                <div class="auth-input-group">
+                    <?= app_icon('users', 'auth-input-icon') ?>
+                    <input type="text" name="name" value="<?= e($oldInput['name'] ?? '') ?>" required autocomplete="name">
+                </div>
+            </label>
 
-        <label class="field">
-            <span>Email address</span>
-            <input type="email" name="email" value="<?= e($oldInput['email'] ?? '') ?>" required autocomplete="email">
-        </label>
+            <label class="auth-field">
+                <span>Email address</span>
+                <div class="auth-input-group">
+                    <?= app_icon('mail', 'auth-input-icon') ?>
+                    <input type="email" name="email" value="<?= e($oldInput['email'] ?? '') ?>" required autocomplete="email">
+                </div>
+            </label>
 
-        <label class="field">
-            <span>Password</span>
-            <input type="password" name="password" required autocomplete="new-password">
-        </label>
+            <label class="auth-field">
+                <span>Password</span>
+                <div class="auth-input-group">
+                    <?= app_icon('lock', 'auth-input-icon') ?>
+                    <input id="register-password" type="password" name="password" required autocomplete="new-password">
+                    <button type="button" class="auth-input-action" data-password-toggle data-password-target="register-password">Show</button>
+                </div>
+            </label>
 
-        <label class="field">
-            <span>Confirm password</span>
-            <input type="password" name="confirm_password" required autocomplete="new-password">
-        </label>
+            <label class="auth-field">
+                <span>Confirm password</span>
+                <div class="auth-input-group">
+                    <?= app_icon('lock', 'auth-input-icon') ?>
+                    <input id="register-confirm-password" type="password" name="confirm_password" required autocomplete="new-password">
+                    <button type="button" class="auth-input-action" data-password-toggle data-password-target="register-confirm-password">Show</button>
+                </div>
+            </label>
 
-        <button type="submit" class="button button-primary button-block" data-loading-text="Creating account...">
-            Create account
-        </button>
-    </form>
+            <button type="submit" class="button button-primary button-block" data-loading-text="Creating account...">
+                <span>Create account</span>
+            </button>
+        </form>
 
-    <div class="auth-footer">
-        <p>Already registered?</p>
-        <a class="button button-secondary button-block" href="<?= e(route_path('login.php')) ?>">Go to login</a>
-    </div>
-</section>
+        <div class="auth-divider"><span>or</span></div>
+
+        <a class="button button-secondary button-block auth-secondary-button" href="<?= e(route_path('login.php')) ?>">Go to login</a>
+    </section>
+</div>
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

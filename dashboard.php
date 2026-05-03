@@ -19,72 +19,123 @@ $pageHeading = 'Payment Sandbox';
 $pageSubtitle = 'Track payment attempts, launch new pushes, and manage the sandbox from one workspace.';
 $pageBreadcrumbs = ['Public', 'Payment Sandbox'];
 $pageActions = [
-    ['label' => 'Create Payment', 'href' => route_path('payment_form.php'), 'variant' => 'button-primary', 'icon' => 'plus'],
-    ['label' => 'List View', 'href' => route_path('payments.php'), 'variant' => 'button-secondary', 'icon' => 'list'],
-    ['label' => 'Settings', 'href' => route_path('settings.php'), 'variant' => 'button-dark', 'icon' => 'settings'],
+    ['label' => 'New Payment', 'href' => route_path('payment_form.php'), 'variant' => 'button-primary', 'icon' => 'plus'],
+    ['label' => 'Transactions', 'href' => route_path('payments.php'), 'variant' => 'button-secondary', 'icon' => 'transactions'],
+    ['label' => 'Settings', 'href' => route_path('settings.php'), 'variant' => 'button-secondary', 'icon' => 'settings'],
 ];
 $activePage = 'dashboard';
 
 require_once __DIR__ . '/includes/header.php';
 ?>
-<section class="summary-strip">
-    <article class="summary-card">
+<section class="desk-summary-grid">
+    <article class="desk-summary-card">
         <span>Total Payments</span>
         <strong><?= e((string) $stats['total_payments']) ?></strong>
         <small>All created orders</small>
     </article>
-    <article class="summary-card">
+    <article class="desk-summary-card">
         <span>Pending Payments</span>
         <strong><?= e((string) $stats['pending_payments']) ?></strong>
-        <small>Waiting on customer action</small>
+        <small>Waiting on customer confirmation</small>
     </article>
-    <article class="summary-card">
+    <article class="desk-summary-card">
         <span>Paid Payments</span>
         <strong><?= e((string) $stats['paid_payments']) ?></strong>
         <small>Successful collections</small>
     </article>
-    <article class="summary-card">
+    <article class="desk-summary-card">
         <span>Failed Payments</span>
         <strong><?= e((string) $stats['failed_payments']) ?></strong>
-        <small>Rejected or cancelled flows</small>
+        <small>Rejected or cancelled attempts</small>
     </article>
 </section>
 
-<section class="workspace-grid">
-    <article class="workspace-card">
-        <div class="panel-header compact">
+<section class="workspace-board">
+    <article class="workspace-section">
+        <div class="workspace-section-head">
             <div>
-                <p class="eyebrow">Payment Operations</p>
-                <h2>Collections workspace</h2>
+                <p class="eyebrow">Operations</p>
+                <h2>Payment Handling</h2>
             </div>
+            <p>Create, submit, and track mobile money requests from one desk.</p>
         </div>
-        <div class="workspace-links">
-            <a class="workspace-link" href="<?= e(route_path('payment_form.php')) ?>">Create mobile money payment <?= app_icon('external', 'workspace-link-icon') ?></a>
-            <a class="workspace-link" href="<?= e(route_path('payments.php')) ?>">Review all payment records <?= app_icon('external', 'workspace-link-icon') ?></a>
-            <a class="workspace-link" href="<?= e(route_path('payment_form.php')) ?>">Start a ClickPesa USSD push <?= app_icon('external', 'workspace-link-icon') ?></a>
+        <div class="workspace-shortcuts">
+            <a class="workspace-shortcut" href="<?= e(route_path('payment_form.php')) ?>">
+                <div class="workspace-shortcut-copy">
+                    <strong>New Payment</strong>
+                    <span>Open the payment document form and send a fresh request.</span>
+                </div>
+                <?= app_icon('external', 'workspace-shortcut-icon') ?>
+            </a>
+            <a class="workspace-shortcut" href="<?= e($recentPayments !== [] ? route_path('payment_status.php?order_id=' . urlencode($recentPayments[0]['order_id'])) : route_path('payment_form.php')) ?>">
+                <div class="workspace-shortcut-copy">
+                    <strong>Latest Payment Status</strong>
+                    <span><?= e($recentPayments !== [] ? 'Jump to the newest payment record and review its current state.' : 'Open the payment form and create a new record first.') ?></span>
+                </div>
+                <?= app_icon('external', 'workspace-shortcut-icon') ?>
+            </a>
         </div>
     </article>
 
-    <article class="workspace-card">
-        <div class="panel-header compact">
+    <article class="workspace-section">
+        <div class="workspace-section-head">
             <div>
-                <p class="eyebrow">Gateway & Tools</p>
-                <h2>Testing controls</h2>
+                <p class="eyebrow">Transactions</p>
+                <h2>Customer & Transaction</h2>
             </div>
+            <p>Inspect payments, customers, phones, and transaction history in list view.</p>
         </div>
-        <div class="workspace-links">
-            <a class="workspace-link" href="<?= e(route_path('simulator.php')) ?>">Open gateway simulator <?= app_icon('external', 'workspace-link-icon') ?></a>
-            <a class="workspace-link" href="<?= e(route_path('settings.php')) ?>">Check ClickPesa credentials <?= app_icon('external', 'workspace-link-icon') ?></a>
-            <a class="workspace-link" href="<?= e(route_path('settings.php')) ?>">Switch API mode or callback URL <?= app_icon('external', 'workspace-link-icon') ?></a>
+        <div class="workspace-shortcuts">
+            <a class="workspace-shortcut" href="<?= e(route_path('payments.php')) ?>">
+                <div class="workspace-shortcut-copy">
+                    <strong>Transactions</strong>
+                    <span>Search by order ID, phone number, customer name, status, and date.</span>
+                </div>
+                <?= app_icon('external', 'workspace-shortcut-icon') ?>
+            </a>
+            <a class="workspace-shortcut" href="<?= e(route_path('payments.php?status=PAID')) ?>">
+                <div class="workspace-shortcut-copy">
+                    <strong>Reports</strong>
+                    <span>Open filtered payment records and use them as lightweight reports.</span>
+                </div>
+                <?= app_icon('external', 'workspace-shortcut-icon') ?>
+            </a>
         </div>
     </article>
 
-    <article class="workspace-card">
-        <div class="panel-header compact">
+    <article class="workspace-section">
+        <div class="workspace-section-head">
             <div>
-                <p class="eyebrow">Current Status</p>
-                <h2>Environment summary</h2>
+                <p class="eyebrow">Testing</p>
+                <h2>Testing & Simulator</h2>
             </div>
+            <p>Use sandbox tools to complete callbacks and observe the payment timeline.</p>
+        </div>
+        <div class="workspace-shortcuts">
+            <a class="workspace-shortcut" href="<?= e(route_path('simulator.php')) ?>">
+                <div class="workspace-shortcut-copy">
+                    <strong>Gateway Simulator</strong>
+                    <span>Trigger PAID, FAILED, CANCELLED, or TIMEOUT callback outcomes.</span>
+                </div>
+                <?= app_icon('external', 'workspace-shortcut-icon') ?>
+            </a>
+            <a class="workspace-shortcut" href="<?= e(route_path('settings.php')) ?>">
+                <div class="workspace-shortcut-copy">
+                    <strong>ClickPesa Settings</strong>
+                    <span>Switch between simulation and live test mode without touching backend code.</span>
+                </div>
+                <?= app_icon('external', 'workspace-shortcut-icon') ?>
+            </a>
+        </div>
+    </article>
+
+    <article class="workspace-section">
+        <div class="workspace-section-head">
+            <div>
+                <p class="eyebrow">Configuration</p>
+                <h2>Settings & Reports</h2>
+            </div>
+            <p>Review the current merchant, API mode, and working currency at a glance.</p>
         </div>
         <div class="workspace-meta-list">
             <div><span>Merchant</span><strong><?= e(get_setting('merchant_name', 'Payment Sandbox Demo Merchant') ?? 'Payment Sandbox Demo Merchant') ?></strong></div>
@@ -100,7 +151,7 @@ require_once __DIR__ . '/includes/header.php';
             <p class="eyebrow">Recent Activity</p>
             <h2>Latest transactions</h2>
         </div>
-        <a class="button button-secondary" href="<?= e(route_path('payments.php')) ?>">Open payments list</a>
+        <a class="button button-secondary" href="<?= e(route_path('payments.php')) ?>"><?= app_icon('transactions', 'button-icon') ?><span>Open payments list</span></a>
     </div>
 
     <?php if ($recentPayments === []): ?>
