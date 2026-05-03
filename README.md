@@ -62,11 +62,6 @@ If you imported the database before the demo user was added, do one of the follo
 
 The project is preconfigured in [`config/config.php`](/C:/xampp/htdocs/payments/payment-sandbox-demo/config/config.php) for:
 
-- Token: `https://api.clickpesa.com/third-parties/generate-token`
-- Preview USSD Push: `https://api.clickpesa.com/third-parties/payments/preview-ussd-push-request`
-- Initiate USSD Push: `https://api.clickpesa.com/third-parties/payments/initiate-ussd-push-request`
-- Query Payments Base URL: `https://api.clickpesa.com/third-parties/payments`
-
 The settings page lets you switch between `ClickPesa Test` and `Simulation`. Use ClickPesa Test to send a real test-mode preview/initiate request, or switch back to Simulation to keep using the local gateway simulator.
 
 ## Test Flow
