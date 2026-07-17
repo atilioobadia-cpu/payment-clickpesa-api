@@ -1,4 +1,4 @@
-# Payment Sandbox
+# Payment Sandbox!
 
 Payment Sandbox Demo is a PHP 8 + MySQL learning project for testing a mobile money payment flow. It supports both the original local simulator and a real ClickPesa test-mode flow using token generation, preview USSD push, initiate USSD push, and payment status query endpoints.
 
