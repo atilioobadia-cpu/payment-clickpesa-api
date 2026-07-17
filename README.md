@@ -29,7 +29,7 @@ Payment Sandbox Demo is a PHP 8 + MySQL learning project for testing a mobile mo
 1. Copy the project into your XAMPP web root so the app lives at:
 
 ```text
-htdocs/payments/payment-sandbox-demo
+htdocs/payments/payment-sandbox
 ```
 
 2. Create the database and tables:
