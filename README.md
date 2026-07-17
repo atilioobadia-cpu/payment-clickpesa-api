@@ -41,7 +41,7 @@ htdocs/payments/payment-sandbox
 
 4. Start Apache and MySQL in XAMPP.
 
-5. Open the project in your browser:
+5. Open the project in browser:
 
 [http://localhost/payments/payment-sandbox-demo/](http://localhost/payments/payment-sandbox-demo/)
 
