@@ -47,7 +47,7 @@ htdocs/payments/payment-sandbox
 
 ## Default Login Credentials
 
-- Name: `Demo Admin`
+- Name: `Admin`
 - Email: `admin@paymentsandbox.test`
 - Password: `Password123!`
 
