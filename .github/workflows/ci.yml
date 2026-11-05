@@ -1,0 +1,14 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: ['**']
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    uses: atilioobadia-cpu/dev-lab/.github/workflows/reusable-ci.yml@main
